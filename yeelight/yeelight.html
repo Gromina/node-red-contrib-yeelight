@@ -1,0 +1,88 @@
+<script type="text/x-red" data-template-name="yeelight-config">
+    <div class="form-row">
+        <label for="node-config-input-hostname"><i class="fa fa-bookmark"></i>Host Name</label>
+        <input class="input-append-left" type="text" id="node-config-input-hostname" style="width: 40%;" >
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-portnum"><i class="fa fa-bookmark"></i>Port Num</label>
+        <input class="input-append-left" type="text" id="node-config-input-portnum" style="width: 40%;" >
+    </div>
+</script>
+<script type="text/javascript">
+(function() {
+    RED.nodes.registerType('yeelight-config',{
+        category: 'config',
+        defaults: { },
+        credentials: {
+            hostname: {required:true},
+            portnum: {required:false}
+        },
+        label: function() {
+            return "Yeelight Config";
+        },
+        exportable: false,
+    });
+})();
+</script>
+
+
+<script type="text/x-red" data-template-name="yeelight">
+   <!-- The available icon classes are defined Font Awesome Icons (FA Icons) -->
+    <div class="form-row">
+        <label for="node-input-config"><i class="fa fa-user"></i> Yeelight config</label>
+        <input type="text" id="node-input-config">
+
+        <label for="node-input-command">Command</label>
+        <select id="node-input-command">
+            <option value="toggle">Toggle</option>
+            <option value="set_power">Set power</option>
+            <option value="set_rgb">Set RGB</option>
+            <option value="set_hsv">Set HSV</option>
+            <option value="set_ct_abx">Set Temperature</option>
+            <option value="set_bright">Set brightness</option>
+        </select>
+    </div>
+    <br/>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+     <div class="form-row">
+     <p>
+     SetRGB: msg.payload = Color in hex format #RRGGBB <br/>
+     Toggle: any incimg message triggers toggle <br/>
+     SetPower: msg.payload = 0/1 <br/>
+     SetHSV: --Not yet implemented-- <br/>
+     Set Temperature: msg.payload = 1700 ~ 6500 K <br/>
+     Brightness: msg.payload = 1..100 (%) <br/>
+
+     </p>
+    </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="yeelight">
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('yeelight',{
+        category: 'MiHome',
+        color:"#C0DEED",
+        defaults: {
+            name: {value:""},
+            command: {value:"toggle"},
+            config:{type:"yeelight-config",required:true}
+        },
+        inputs:1,
+        outputs:1,
+        // set the icon (held in icons dir below where you save the node)
+        icon: "icon.png",     // saved in  icons/myicon.png
+        label: function() {
+            return (this.name||"yeelight") + ": " + this.command;
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
