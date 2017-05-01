@@ -37,7 +37,7 @@
             <option value="toggle">Toggle</option>
             <option value="set_power">Set power</option>
             <option value="set_rgb">Set RGB</option>
-            <option value="set_hsv">Set HSV</option>
+           <!-- <option value="set_hsv">Set HSV</option>  -->
             <option value="set_ct_abx">Set Temperature</option>
             <option value="set_bright">Set brightness</option>
         </select>
@@ -51,9 +51,8 @@
      <div class="form-row">
      <p>
      SetRGB: msg.payload = Color in hex format #RRGGBB <br/>
-     Toggle: any incimg message triggers toggle <br/>
+     Toggle: any incoming message triggers toggle <br/>
      SetPower: msg.payload = 0/1 <br/>
-     SetHSV: --Not yet implemented-- <br/>
      Set Temperature: msg.payload = 1700 ~ 6500 K <br/>
      Brightness: msg.payload = 1..100 (%) <br/>
 
@@ -63,6 +62,19 @@
 
 
 <script type="text/x-red" data-help-name="yeelight">
+<p>Node to control Yeelight</p>
+ <p>
+     <b>SetRGB</b>: msg.payload = Color in hex format #RRGGBB <br/>
+     <b>Toggle</b>: any incoming message triggers toggle <br/>
+     <b>SetPower</b>: msg.payload = 0/1 <br/>
+     <b>Set Temperature</b>: msg.payload = 1700 ~ 6500 K <br/>
+     <b>Brightness</b>: msg.payload = 1..100 (%) <br/>
+
+     </p>
+
+
+
+
 </script>
 
 <script type="text/javascript">
