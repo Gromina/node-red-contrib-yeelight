@@ -35,5 +35,6 @@ Command is configured right in a node
 
 
 ## Other interesting links
-[Mi Home protocol reverse enginnering](https://github.com/OpenMiHome/mihome-binary-protocol)
-[Node red node creation docs](https://nodered.org/docs/creating-nodes/)
+
+* [Mi Home protocol reverse enginnering](https://github.com/OpenMiHome/mihome-binary-protocol)
+* [Node red node creation docs](https://nodered.org/docs/creating-nodes/)

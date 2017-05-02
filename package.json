@@ -2,7 +2,7 @@
   "name": "node-red-contrib-yeelight",
   "version": "1.0.1",
   "description": "Yeelight control node for node-red.",
-  "license": "Unlicense",
+  "license": "MIT License",
   "author": "Alexander Sorokin <alex_grom@yahoo.com>",
   "repository": "https://github.com/Gromina/node-red-contrib-yeelight.git",
   "bugs": "https://github.com/Gromina/node-red-contrib-yeelight/issues",
