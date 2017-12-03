@@ -7,7 +7,7 @@
   "repository": "https://github.com/Gromina/node-red-contrib-yeelight.git",
   "bugs": "https://github.com/Gromina/node-red-contrib-yeelight/issues",
   "dependencies": {
-    "yeelight2": "^1.3.4"
+    "yeelight2": "^1.3.5"
   },
   "keywords": [
     "node-red"
