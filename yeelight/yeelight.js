@@ -34,8 +34,8 @@ module.exports = function(RED) {
         var node = this;
 
         if (!this.light) {
-            node.warn("Missing Yeelight config");
-            node.status({fill:"red",shape:"ring",text:"Missing Yeelight Config"});
+			node.warn("Missing Yeelight config/Light not found");
+			node.status({fill:"red",shape:"ring",text:"Missing Yeelight Config/Light not found"});
             return;
         }
         node.status({});
@@ -44,9 +44,13 @@ module.exports = function(RED) {
         this.send(msg);
 
         this.on('input', function (msg) {
-            var cmd = this.command
-            this.light[cmd](msg.payload)
-            //ithis.light.toggle()
+			try {
+				var cmd = this.command
+				this.light[cmd](msg.payload)
+			} catch(err) {
+				node.status({fill:"red",shape:"ring",text:err});
+				this.error(err)
+			}
         });
 
         this.on("close", function() {
