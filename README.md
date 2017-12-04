@@ -38,3 +38,9 @@ Command is configured right in a node
 
 * [Mi Home protocol reverse enginnering](https://github.com/OpenMiHome/mihome-binary-protocol)
 * [Node red node creation docs](https://nodered.org/docs/creating-nodes/)
+
+
+# Contributors
+
+* Alexander Sorokin (initial author https://github.com/Gromina)
+* Hendrik Roth (https://github.com/HendrikRoth)
