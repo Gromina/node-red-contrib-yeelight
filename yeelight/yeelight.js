@@ -10,7 +10,7 @@ module.exports = function(RED) {
             this.credentials.hostname && this.credentials.portnum){
 
 
-            window.setTimeout(
+            setTimeout(
              (function(self) {
                  return function() {
                         self.setupConnection.apply(self, arguments);
@@ -23,21 +23,26 @@ module.exports = function(RED) {
             this.light.exit();
         });
 
+        this.connected = function(){
+            console.log("connected to lamp")
+            node.status({fill:"green",shape:"ring",text:"Connected"});
+        }
         this.setupConnection = function(){
             try {
-                this.light = Yeelight("yeelight://"+this.credentials.hostname+":"+this.credentials.portnum);
+                this.light = Yeelight(this.credentials.hostname,this.credentials.portnum);
+                
             } catch(err) {
                 node.status({fill:"red",shape:"ring",text:err});
                 this.light = null;
                 this.error(err);
 
                 // try to reconnect in 5 minutes
-                window.setTimeout(
+                setTimeout(
                  (function(self) {
                      return function() {
                             self.setupConnection.apply(self, arguments);
                         }
-                 })(this), 1000*60*5
+                 })(this), 1000
                 );
             }
         }
@@ -64,18 +69,18 @@ module.exports = function(RED) {
 
         var msg = {};
         this.send(msg);
-
+        
         this.on('input', function (msg) {
-			try {
-				var cmd = this.command
+            try {
+                var cmd = this.command
                 this.light = this.config ? this.config.light : null;
-				this.light[cmd](msg.payload)
-			} catch(err) {
-				node.status({fill:"red",shape:"ring",text:err});
-				this.error(err)
-			}
+                this.light[cmd](msg.payload)
+                node.status({fill:"green",shape:"ring",text:"Connected"});
+            } catch(err) {
+                node.status({fill:"red",shape:"ring",text:err});
+                this.error(err)
+            }
         });
-
         this.on("close", function() {
 
         });
