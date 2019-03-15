@@ -44,3 +44,4 @@ Command is configured right in a node
 
 * Alexander Sorokin (initial author https://github.com/Gromina)
 * Hendrik Roth (https://github.com/HendrikRoth)
+* PTS93 (https://github.com/PTS93)
