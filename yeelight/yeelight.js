@@ -28,23 +28,22 @@ module.exports = function(RED) {
             node.status({fill:"green",shape:"ring",text:"Connected"});
         }
         this.setupConnection = function(){
-            try {
-                this.light = Yeelight(this.credentials.hostname,this.credentials.portnum);
-                
-            } catch(err) {
+            this.light = Yeelight(this.credentials.hostname,this.credentials.portnum);
+            this.light.on('error',function(err){
+                console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
                 this.light = null;
                 this.error(err);
 
-                // try to reconnect in 5 minutes
+                // try to reconnect in 10 seconds
                 setTimeout(
                  (function(self) {
                      return function() {
                             self.setupConnection.apply(self, arguments);
                         }
-                 })(this), 1000
+                 })(this), 1000*10
                 );
-            }
+            })
         }
 
     }
