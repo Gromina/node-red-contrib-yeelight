@@ -28,7 +28,7 @@ module.exports = function(RED) {
             node.status({fill:"green",shape:"ring",text:"Connected"});
         }
         this.setupConnection = function(){
-            this.light = Yeelight(this.credentials.hostname,this.credentials.portnum);
+            this.light = Yeelight(node.credentials.hostname,node.credentials.portnum);
             this.light.on('error',function(err){
                 console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
@@ -38,7 +38,7 @@ module.exports = function(RED) {
                 setTimeout(
                  (function(self) {
                      return function() {
-                            self.setupConnection.apply(self, arguments);
+                            node.setupConnection.apply(self, arguments);
                         }
                  })(this), 1000*2
                 );
