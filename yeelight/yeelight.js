@@ -72,7 +72,10 @@ module.exports = function(RED) {
             try {
                 var cmd = this.command
                 this.light = this.config ? this.config.light : null;
-                this.light[cmd](msg.payload)
+                this.light[cmd](msg.payload).then(function(response) {
+                    msg.payload = response;
+                    node.send(msg);
+                });
                 node.status({fill:"green",shape:"ring",text:"Connected"});
             } catch(err) {
                 node.status({fill:"red",shape:"ring",text:err});
