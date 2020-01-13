@@ -33,7 +33,7 @@ module.exports = function(RED) {
                 console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
                 node.light = null;
-
+                node.error(err);
                 // try to reconnect in 10 seconds
                 setTimeout(
                  (function(self) {
@@ -76,7 +76,7 @@ module.exports = function(RED) {
                 node.status({fill:"green",shape:"ring",text:"Connected"});
             } catch(err) {
                 node.status({fill:"red",shape:"ring",text:err});
-                this.error(err)
+                node.error(err)
             }
         });
         this.on("close", function() {
