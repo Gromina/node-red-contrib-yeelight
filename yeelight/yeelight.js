@@ -29,6 +29,9 @@ module.exports = function(RED) {
         }
         this.setupConnection = function(){
             this.light = Yeelight(node.credentials.hostname,node.credentials.portnum);
+            if(this.light){
+                node.light = this.light;
+            }
             this.light.on('error',function(err){
                 console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
