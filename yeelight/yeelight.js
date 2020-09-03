@@ -28,22 +28,20 @@ module.exports = function(RED) {
             node.status({fill:"green",shape:"ring",text:"Connected"});
         }
         this.setupConnection = function(){
-            this.light = Yeelight(node.credentials.hostname,node.credentials.portnum);
-            if(this.light){
-                node.light = this.light;
-            }
+            var setup = this
+            this.light = Yeelight(this.credentials.hostname, this.credentials.portnum);
             this.light.on('error',function(err){
-                console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
-                node.light = null;
+                this.light = null;
                 node.error(err);
+
                 // try to reconnect in 10 seconds
                 setTimeout(
-                 (function(self) {
+                 (function() {
                      return function() {
-                            node.setupConnection.apply(self, arguments);
+                            setup.setupConnection.apply(setup, arguments);
                         }
-                 })(this), 1000*2
+                 })(this), 1000*10
                 );
             })
         }
@@ -75,10 +73,7 @@ module.exports = function(RED) {
             try {
                 var cmd = this.command
                 this.light = this.config ? this.config.light : null;
-                this.light[cmd](msg.payload).then(function(response) {
-                    msg.payload = response;
-                    node.send(msg);
-                });
+                this.light[cmd](msg.payload)
                 node.status({fill:"green",shape:"ring",text:"Connected"});
             } catch(err) {
                 node.status({fill:"red",shape:"ring",text:err});
