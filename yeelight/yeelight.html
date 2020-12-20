@@ -14,11 +14,11 @@
         category: 'config',
         defaults: { },
         credentials: {
-            hostname: {required:true},
-            portnum: {required:false}
+            hostname: {value:"localhost",required:true},
+            portnum: {value:55443, required:false}
         },
         label: function() {
-            return "Yeelight Config";
+            return "Yeelight Config " + this.credentials.hostname;
         },
         exportable: false,
     });
