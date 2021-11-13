@@ -32,6 +32,9 @@ module.exports = function(RED) {
             if(this.light){
                 node.light = this.light;
             }
+            this.light.on('props', function(props) {
+                node.emit('light.props', props);
+            });
             this.light.on('error',function(err){
                 console.log("Yeelight error",err)
                 node.status({fill:"red",shape:"ring",text:err});
@@ -71,6 +74,13 @@ module.exports = function(RED) {
         var msg = {};
         this.send(msg);
         
+        if (n.command === 'get_prop') {
+            this.config.on('light.props', function(props) {
+                 msg.payload = props;
+                 node.send(msg)
+            });
+            return;
+        }
         this.on('input', function (msg) {
             try {
                 var cmd = this.command
@@ -84,9 +94,6 @@ module.exports = function(RED) {
                 node.status({fill:"red",shape:"ring",text:err});
                 node.error(err)
             }
-        });
-        this.on("close", function() {
-
         });
     }
 
