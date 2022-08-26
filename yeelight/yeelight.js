@@ -75,7 +75,13 @@ module.exports = function(RED) {
             try {
                 var cmd = this.command
                 this.light = this.config ? this.config.light : null;
-                this.light[cmd](msg.payload).then(function(response) {
+                var send
+                if (Array.isArray(msg.payload)) {
+                    send = this.light[cmd](...msg.payload)
+                } else {
+                    send = this.light[cmd](msg.payload)
+                }
+                send.then(function(response) {
                     msg.payload = response;
                     node.send(msg);
                 });
