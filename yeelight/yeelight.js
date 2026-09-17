@@ -78,6 +78,9 @@ module.exports = function(RED) {
                 this.light[cmd](msg.payload).then(function(response) {
                     msg.payload = response;
                     node.send(msg);
+                }).catch(function(err) {
+                    node.status({fill:"red",shape:"ring",text:err && err.message ? err.message : String(err)});
+                    node.error(err);
                 });
                 node.status({fill:"green",shape:"ring",text:"Connected"});
             } catch(err) {
