@@ -75,13 +75,23 @@ module.exports = function(RED) {
             try {
                 var cmd = this.command
                 this.light = this.config ? this.config.light : null;
-                this.light[cmd](msg.payload).then(function(response) {
-                    msg.payload = response;
-                    node.send(msg);
-                }).catch(function(err) {
-                    node.status({fill:"red",shape:"ring",text:err && err.message ? err.message : String(err)});
-                    node.error(err);
-                });
+                if (cmd === 'set_ct_abx') {
+                    this.light.set_ct_abx(msg.payload, 2).then(function(response) {
+                        msg.payload = response;
+                        node.send(msg);
+                    }).catch(function(err) {
+                        node.status({fill:"red",shape:"ring",text:err && err.message ? err.message : String(err)});
+                        node.error(err);
+                    });
+                } else {
+                    this.light[cmd](msg.payload).then(function(response) {
+                        msg.payload = response;
+                        node.send(msg);
+                    }).catch(function(err) {
+                        node.status({fill:"red",shape:"ring",text:err && err.message ? err.message : String(err)});
+                        node.error(err);
+                    });
+                }
                 node.status({fill:"green",shape:"ring",text:"Connected"});
             } catch(err) {
                 node.status({fill:"red",shape:"ring",text:err});
